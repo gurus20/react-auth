@@ -5,6 +5,7 @@ function create_session(user, access_token) {
         is_authenticated: true
     }
     localStorage.setItem("session", JSON.stringify(session_obj))
+    return session_obj;
 }
 
 function get_session() {
@@ -12,4 +13,8 @@ function get_session() {
     return JSON.parse(session)
 }
 
-export { get_session, create_session } 
+function clear_session() {
+    localStorage.removeItem("session");
+}
+
+export { get_session, create_session, clear_session } 

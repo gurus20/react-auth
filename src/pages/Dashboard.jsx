@@ -1,24 +1,24 @@
 import { Link } from "react-router-dom";
-import { AuthContext } from '../auth/AuthProvider';
+import { AuthContext, clearSession } from '../auth/AuthProvider';
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 
 
 export default function Dashboard() {
-    const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+    const { session, setSession } = useContext(AuthContext);
 
     const handleLogout = () => {
-        localStorage.removeItem("auth");
-        setIsAuthenticated(false);
+        clearSession();
+        setSession(null);
     }
 
-    if (!isAuthenticated) {
+    if (!session) {
         return <Navigate to="/login" />;
     }
 
     return (
         <>
-            <p>Dashboard</p>
+            <p>Dashboard, Welcome - { session.user }</p>
             <button onClick={handleLogout}>Logout</button>
             <Link to="/">Home</Link>
         </>

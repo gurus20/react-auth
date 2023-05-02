@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { AuthContext } from '../auth/AuthProvider';
+import { AuthContext, clearSession } from '../auth/AuthProvider';
 import { useContext } from 'react';
 
 
@@ -7,8 +7,8 @@ export default function Home() {
     const { session, setSession } = useContext(AuthContext);
 
     const handleLogout = () => {
-        localStorage.removeItem("auth");
-        setIsAuthenticated(false);
+        clearSession();
+        setSession(null);
     }
 
     return (
@@ -16,13 +16,13 @@ export default function Home() {
             <p>Home -- unprotected route</p>
 
             {
-                localStorage.getItem("auth") ?
+                session ?
                     <>
-                        <p>You are Authenticated</p>
+                        <p>You are Authenticated as { session.user }</p>
                         <button onClick={handleLogout}>Logout</button>
                     </>:
-                <Link to="/login">Login</Link>
-            }
+                    <Link to="/login">Login</Link>
+                }
         </>
     )
 }

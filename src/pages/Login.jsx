@@ -1,22 +1,21 @@
 import { useState, useContext } from 'react';
-import { AuthContext } from '../auth/AuthProvider';
+import { AuthContext, createSession } from '../auth/AuthProvider';
 import { Navigate } from 'react-router-dom';
-import { create_session, get_session } from "../auth/Session"
 
 export default function Login() {
     const [username, setUsername] = useState("gurus20");
     const [errors, setErrors] = useState({});
-    const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+    const { session, setSession } = useContext(AuthContext);
 
-    if (isAuthenticated) {
+    if (session) {
         return <Navigate to="/dashboard" />;
     }
 
     const handleLogin = (e) => {
         e.preventDefault();
         if (username === "gurus20") {
-            create_session(username, "7COJe5WYoZ");
-            setIsAuthenticated(get_session().is_authenticated);
+            const session = createSession(username, "7COJe5WYoZ");
+            setSession(session);
         }
         else {
             setErrors(er => ({ ...er, "invalid_cred": "Invalid Credentials" }))
@@ -26,6 +25,7 @@ export default function Login() {
 
     return (
         <>
+            <p>Login</p>
             <p>{ errors.invalid_cred }</p>
             <form onSubmit={handleLogin}>
                 <input
