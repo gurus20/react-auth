@@ -1,30 +1,63 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from 'react-router-dom';
+import $ from "jquery"
 
 export default function Data() {
-    const navigate = useNavigate();
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [errors, setErrors] = useState(null);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:5000/random-data')
-            .then(response => response.json())
-            .then(data => setData(data));
+        const url = "http://localhost:5000/random-data"
+        $.ajax({
+            url: url,
+            type: 'GET',
+            timeout: 5000,
+            success: function (response) {
+                setData([...response]);
+                setLoading(false);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                setLoading(false);
+                if (textStatus === 'timeout') {
+                    setErrors("Request Timed out");
+                    console.error('Request timed out');
+                } else if (xhr.status === 0) {
+                    setErrors("Network Error");
+                    console.error('Network error');
+                } else if (xhr.status === 404) {
+                    setErrors("Resource Not Found");
+                    console.error('Resource not found');
+                } else if (xhr.status === 500) {
+                    setErrors("Server Error");
+                    console.error('Server error');
+                } else {
+                    console.error('Unknown error:', errorThrown);
+                }
+            }
+        });
+
     }, []);
-    
-    const handleClick = (data) => {
-        navigate("/datashow", {state: data})
-    }
 
     return (
         <>
-            <div className="container">
-
-            <h5>Users:</h5>
-            <ul>
-                {data.map((data, i) => (
-                    <li key={i} onClick={() => handleClick(data)}>{data.name}</li>
-                ))}
-            </ul>
+            <div className="container cover-space d-flex justify-content-center align-items-center">
+                {
+                    loading &&
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                }
+                {
+                    errors &&
+                    <div className="alert alert-danger">
+                        <p className="mb-0">{errors}</p>
+                    </div>
+                }
+                <ul>
+                    {data.map((item, i) => (
+                        <li key={i}>{item.name}</li>
+                    ))}
+                </ul>
             </div>
         </>
     )

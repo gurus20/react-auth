@@ -6,7 +6,7 @@ import { Navigate } from 'react-router-dom';
 
 export default function Dashboard() {
     const { session, setSession } = useContext(AuthContext);
-
+    
     const handleLogout = () => {
         clearSession();
         setSession(null);

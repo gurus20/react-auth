@@ -24,7 +24,6 @@ function clearSession() {
 
 function AuthProvider({ children }) {
     const [session, setSession] = useState(getSession());
-
     return (
         <AuthContext.Provider value={{ session, setSession }}>
             {children}
