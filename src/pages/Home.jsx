@@ -1,14 +1,22 @@
 import { Link } from "react-router-dom"
 import { AuthContext, clearSession } from '../auth/AuthProvider';
+// import { ThemeContext } from './DarkMode';
 import { useContext } from 'react';
 
 
 export default function Home() {
     const { session, setSession } = useContext(AuthContext);
+    // const { darkTheme, setDarkTheme } = useContext(ThemeContext);
 
     const handleLogout = () => {
         clearSession();
         setSession(null);
+    }
+
+    const toggleTheme = () => {
+        const theme = localStorage.getItem('dark-theme');
+        localStorage.setItem('dark-theme', !theme);
+        document.body.classList.toggle('dark-theme');
     }
 
     return (
@@ -28,9 +36,11 @@ export default function Home() {
                                 <Link to={"/login"} className="btn btn-success"> <i className="bi bi-person-fill"></i> Login</Link>
                             </>
                     } <br /> <br />
-                    <Link to={"/data"}>Go to Data</Link>
+                    <Link to={"/data"}>Go to Data</Link> <br /> <br />
+                    <button onClick={toggleTheme}>Change Theme</button>
                 </div>
             </div>
+
         </>
     )
 }

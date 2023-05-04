@@ -9,6 +9,12 @@ import DataShow from './pages/DataShow';
 import { AuthProvider } from './auth/AuthProvider';
 
 export default function App() {
+  const theme = localStorage.getItem('dark-theme');
+  
+  console.log(theme)
+  if (theme === "true") {
+    document.body.classList.toggle('dark-theme');
+  }
 
   return (
     <Router>

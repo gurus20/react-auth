@@ -7,3 +7,8 @@
 .cover-space {
   min-height: 60vh;
 }
+
+.dark-theme {
+  background-color: black;
+  color: white;
+}
