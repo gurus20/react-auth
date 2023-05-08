@@ -5,15 +5,18 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Data from './pages/Data';
 import DataShow from './pages/DataShow';
+import Form from './pages/Form';
 
 import { AuthProvider } from './auth/AuthProvider';
 
 export default function App() {
   const theme = localStorage.getItem('dark-theme');
   
-  console.log(theme)
   if (theme === "true") {
-    document.body.classList.toggle('dark-theme');
+    document.body.classList.add('dark-theme');
+  }
+  else {
+    document.body.classList.remove('dark-theme');
   }
 
   return (
@@ -25,6 +28,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/data" element={<Data />} />
           <Route path="/datashow" element={<DataShow />} />
+          <Route path="/form" element={<Form />} />
         </Routes>
       </AuthProvider>
     </Router>

@@ -15,8 +15,15 @@ export default function Home() {
 
     const toggleTheme = () => {
         const theme = localStorage.getItem('dark-theme');
-        localStorage.setItem('dark-theme', !theme);
-        document.body.classList.toggle('dark-theme');
+        
+        if (theme === "true") {
+            localStorage.setItem('dark-theme', false);
+            document.body.classList.remove('dark-theme');
+        }
+        else {
+            localStorage.setItem('dark-theme', true);
+            document.body.classList.add('dark-theme');
+        }
     }
 
     return (
