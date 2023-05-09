@@ -34,3 +34,30 @@ export default function App() {
     </Router>
   );
 }
+
+
+
+// {
+//   session &&
+//     <div className="dropdown">
+//       <button
+//         className="btn dropdown-toggle"
+//         id="dropdownMenuLink"
+//         data-bs-toggle="dropdown"
+//         aria-expanded="false">
+//         <i className="bi bi-person-circle fs-4"></i>
+//       </button>
+
+//       <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+//         <li><Link className="dropdown-item" to={"/admin"}>Admin</Link></li>
+//         <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
+//       </ul>
+//     </div>
+// }
+
+
+// const handleLogout = () => {
+//   clearSession();
+//   setSession(null);
+//   return <Navigate to="/login" />
+// }
